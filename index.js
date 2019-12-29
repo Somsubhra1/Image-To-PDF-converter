@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
     },
     filename: function(req, file, cb) {
         // cb(null, file.fieldname + "-" + Date.now());
-        cb(null, req.file);
+        cb(null, file.originalname);
     }
 });
 
@@ -29,6 +29,13 @@ const upload = multer({ storage: storage }).single("avatar");
 // Route to display index page
 app.get("/", (req, res) => {
     res.render("index");
+});
+
+// Route for uploading file
+app.post("/upload", (req, res) => {
+    upload(req, res, err => {
+        console.log(req.file);
+    });
 });
 
 // Setting Port to listen to
