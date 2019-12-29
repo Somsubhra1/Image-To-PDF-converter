@@ -4,13 +4,46 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Image To PDF</title>
+        <title>Image To PDF Converter</title>
+        <link rel="stylesheet" href="css/button.css" />
+        <link rel="stylesheet" href="css/styles.css" />
     </head>
     <body>
-        <h1>Image to PDF</h1>
-        <form action="/upload" method="POST" enctype="multipart/form-data">
-            <input type="file" name="avatar" id="" />
-            <input type="submit" value="Convert">
+        <h1 style="text-align: center; margin-top: 2em;">Image to PDF Converter</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <main class="main_full">
+                <div class="container">
+                    <div class="panel">
+                        <div class="button_outer">
+                            <div class="btn_upload">
+                                <input
+                                    type="file"
+                                    id="upload_file"
+                                    name="avatar"
+                                />
+                                Upload Image
+                            </div>
+                            <div class="processing_bar"></div>
+                            <div class="success_box"></div>
+                        </div>
+                    </div>
+                    <div class="error_msg"></div>
+                    <div class="uploaded_file_view" id="uploaded_view">
+                        <span class="file_remove">X</span>
+                    </div>
+                </div>
+            </main>
+            <button
+                type="submit"
+                value="Convert"
+                id="submitbtn"
+                class="offset"
+                style="display: none"
+            >
+                Convert
+            </button>
         </form>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="js/script.js"></script>
     </body>
 </html>

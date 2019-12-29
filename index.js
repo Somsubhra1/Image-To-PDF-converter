@@ -1,6 +1,7 @@
 // Initializing packages
 const express = require("express");
 const fs = require("fs");
+const path = require("path");
 const multer = require("multer");
 const { TesseractWorker } = require("tesseract.js");
 
@@ -12,6 +13,9 @@ const worker = new TesseractWorker();
 
 // Set view engine
 app.set("view engine", "ejs");
+
+// Static files middleware:
+app.use(express.static(path.join(__dirname, "/public")));
 
 // Multer middleware
 const storage = multer.diskStorage({
