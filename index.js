@@ -34,7 +34,51 @@ app.get("/", (req, res) => {
 // Route for uploading file
 app.post("/upload", (req, res) => {
     upload(req, res, err => {
-        console.log(req.file);
+        fs.readFile(`./uploads/${req.file.originalname}`, (err, data) => {
+            if (err) {
+                return console.log(`Error: ${err}`);
+            }
+            // Analysing and creating pdf
+            worker
+                .recognize(data, "eng", { tessjs_create_pdf: "1" })
+                .progress(progress => console.log(progress))
+                .then(result => {
+                    // Deleting the image file
+                    fs.unlink(`./uploads/${req.file.originalname}`, err => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                    return res.redirect("/download");
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+                .finally(() => {
+                    worker.terminate();
+                });
+        });
+    });
+});
+
+// File download route
+app.get("/download", (req, res) => {
+    const file = `${__dirname}/tesseract.js-ocr-result.pdf`;
+    // Checking if file already exists
+    fs.access(file, fs.F_OK, err => {
+        if (err) {
+            return res.redirect("/");
+        }
+    });
+
+    // Sending download response to user
+    res.download(file, err => {
+        // Deleting pdf file
+        fs.unlink(file, err => {
+            if (err) {
+                console.log(err);
+            }
+        });
     });
 });
 
