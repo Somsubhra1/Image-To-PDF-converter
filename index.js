@@ -34,6 +34,11 @@ app.get("/", (req, res) => {
 // Route for uploading file
 app.post("/upload", (req, res) => {
     upload(req, res, err => {
+        // Check if user tries to upload null file
+        if (req.file === undefined) {
+            return res.redirect("/");
+        }
+        // Reading file
         fs.readFile(`./uploads/${req.file.originalname}`, (err, data) => {
             if (err) {
                 return console.log(`Error: ${err}`);
