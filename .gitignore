@@ -107,7 +107,7 @@ dist
 .vscode-test
 
 # Upload files
-uploads/*
+# uploads/
 
 # traineddata
 *.traineddata
